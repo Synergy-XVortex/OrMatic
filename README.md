@@ -1,44 +1,43 @@
-# Automatisation de la récupération du prix de l'or
+# OrMatic
 
-Résumé:
-OrMatic est un script automatisé conçu pour récupérer quotidiennement le prix du lingot d'or de 10 grammes à partir du site web "Achat Or et Argent" et mettre à jour automatiquement une feuille de calcul Google avec le prix actuel et la date de récupération. Cet outil est idéal pour les investisseurs, analystes financiers et éducateurs souhaitant suivre facilement les fluctuations du prix de l'or.
+Ce projet, nommé OrMatic, est conçu pour suivre et enregistrer automatiquement le cours de l'or à partir d'un site web spécifique dans une feuille de calcul Google Sheets. Voici une description détaillée des fichiers et de leur fonctionnement :
 
-Fonctionnalités Principales:
+# Fichier CoursOr
+Ce fichier contient les fonctions nécessaires pour récupérer et mettre à jour automatiquement le prix de l'or dans une feuille de calcul Google Sheets.
 
-  1. Récupération Automatique du Prix de l'Or:
-      - Utilisation de requêtes HTTP pour accéder au contenu de la page web et extraction du prix de l'or avec des expressions régulières.
-  
-  2. Mise à Jour Automatique de la Feuille de Calcul:
-      - Ajout du prix de l'or dans la colonne B de la feuille de calcul Google et de la date correspondante dans la colonne A.
-      - Les nouvelles entrées sont ajoutées à la dernière ligne disponible.
-  
-  3. Déclencheur Quotidien Automatique:
-      - Mise en place d'un déclencheur quotidien qui exécute automatiquement la récupération et la mise à jour des données une fois par jour.
-  
-Fonctions Détaillées:
+1. fetchGoldPrice() :
+    - Description : Fonction qui récupère le prix de l'or à partir d'une URL spécifique en utilisant UrlFetchApp et des expressions régulières pour extraire le prix du contenu de la page web.
+    - Fonctionnalités :
+        - Utilisation de UrlFetchApp.fetch() pour récupérer le contenu de l'URL.
+        - Utilisation d'une regex pour extraire le prix de l'or du contenu HTML récupéré.
+        - Conversion de la chaîne extraite en nombre pour obtenir le prix réel de l'or.
 
-  1. fetchGoldPrice:
-      - Description: Accède à la page web spécifiée, récupère son contenu, et utilise une expression régulière pour extraire le prix de l'or affiché.
-      - Processus:
-          - Envoie une requête HTTP à l'URL de la page.
-          - Analyse le contenu de la page pour trouver le prix de l'or en utilisant une expression régulière.
-          - Nettoie la chaîne extraite pour enlever les espaces, les virgules et le symbole "€".
-          - Convertit la chaîne nettoyée en un nombre flottant représentant le prix de l'or.
+2. updateGoldPrice() :
+    - Description : Fonction qui met à jour le prix de l'or dans une feuille de calcul Google Sheets et enregistre la date de cette mise à jour.
+    - Fonctionnalités :
+        - Appel à fetchGoldPrice() pour obtenir le prix actuel de l'or.
+        - Récupération de la feuille active dans la feuille de calcul Google Sheets en cours.
+        - Ajout du prix de l'or à la dernière ligne utilisée dans la colonne B.
+        - Enregistrement de la date correspondante dans la colonne A.
 
-  2. updateGoldPrice:
-      - Description: Récupère le prix de l'or via fetchGoldPrice et met à jour la feuille de calcul Google avec le prix et la date actuelle.
-      - Processus:
-          - Appelle la fonction fetchGoldPrice pour obtenir le prix actuel de l'or.
-          - Trouve la dernière ligne utilisée dans la colonne B de la feuille de calcul.
-          - Ajoute le prix de l'or à la colonne B de la prochaine ligne disponible.
-          - Ajoute la date actuelle à la colonne A de la même ligne.
+3. setDailyTrigger() :
+    - Description : Fonction qui crée un déclencheur quotidien pour mettre à jour automatiquement le prix de l'or tous les jours.
+    - Fonctionnalités :
+      - Utilisation de ScriptApp.newTrigger() pour créer un déclencheur qui appelle la fonction updateGoldPrice() tous les jours.
+      - Configuration du déclencheur pour qu'il s'exécute tous les jours à la même heure.
 
-  3. setDailyTrigger:
-      - Description: Crée un déclencheur quotidien qui exécute updateGoldPrice une fois par jour.
-      - Processus:
-          - Utilise l'API de Google Apps Script pour créer un nouveau déclencheur basé sur le temps.
-          - Configure le déclencheur pour s'exécuter tous les jours.
+# Initialisation du projet :
+Pour utiliser le projet OrMatic, suivez ces étapes d'initialisation :
 
+1. Configuration de Google Sheets :
+    - Créez une nouvelle feuille de calcul Google Sheets ou utilisez une existante où vous souhaitez enregistrer le prix de l'or.
+
+2. Configuration du script Google Apps Script :
+    - Copiez le contenu du fichier coursOr dans le script Google Apps Script associé à votre feuille de calcul Google Sheets.
+    - Sauvegardez le script et autorisez l'accès aux services Google nécessaires.
+
+3. Configuration du déclencheur quotidien :
+    - Appelez setDailyTrigger() une fois pour créer un déclencheur quotidien qui mettra à jour automatiquement le prix de l'or dans votre feuille de calcul tous les jours.
 
 Avantages:
   - Automatisation Complète: Plus besoin d'intervention manuelle pour obtenir ou enregistrer les prix de l'or.
@@ -50,19 +49,6 @@ Applications Potentielles:
   - Investisseurs en Or: Surveiller les fluctuations quotidiennes du prix de l'or et prendre des décisions éclairées.
   - Analystes Financiers: Intégrer ces données dans leurs analyses pour étudier les tendances du marché de l'or.
   - Enseignement: Utilisation par les enseignants et les étudiants en finance pour des études de cas et des analyses de marché en temps réel.
-  
-Installation et Utilisation:
 
-1. Configuration Initiale:
-    - Ouvrez Google Sheets et créez une nouvelle feuille de calcul.
-    - Accédez à Extensions > Apps Script
-
-2. Ajout du Script:
-    - Copiez le script dans l'éditeur Apps Script
-
-3. Déclenchement Automatique:
-    - Sauvegardez le script.
-    - Exécutez la fonction setDailyTrigger une fois pour configurer le déclencheur quotidien.
-
-Conclusion:
-OrMatic est un outil puissant pour le suivi automatisé du prix de l'or, offrant une solution pratique et fiable pour surveiller les fluctuations quotidiennes du marché de l'or.
+# Auteur
+Ce projet a été développé par Clément Vongsanga. Pour toute question, suggestion ou contribution, n'hésitez pas à ouvrir une issue ou à proposer une pull request sur GitHub.
