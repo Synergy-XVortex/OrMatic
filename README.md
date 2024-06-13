@@ -1,4 +1,4 @@
-# Automatisation-de-la-r-cup-ration-du-prix-de-l-or
+# Automatisation de la récupération du prix de l'or
 
 Résumé:
 OrMatic est un script automatisé conçu pour récupérer quotidiennement le prix du lingot d'or de 10 grammes à partir du site web "Achat Or et Argent" et mettre à jour automatiquement une feuille de calcul Google avec le prix actuel et la date de récupération. Cet outil est idéal pour les investisseurs, analystes financiers et éducateurs souhaitant suivre facilement les fluctuations du prix de l'or.
